@@ -13,42 +13,31 @@ import {
 
 export const description = "A multiple line chart"
 
-const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-]
+
 
 const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "hsl(var(--chart-4))",
-    },
-    mobile: {
-        label: "Mobile",
+    price: {
+        label: "Price",
         color: "hsl(var(--chart-5))",
     },
 } satisfies ChartConfig
 
-export function SparkLine() {
+export function SparkLine({ data }: { data: any }) {
+    console.log(data)
     return (
-        <ChartContainer config={chartConfig} className="w-40 h-14">
+        <ChartContainer config={chartConfig} className=" h-14">
             <LineChart
                 accessibilityLayer
-                data={chartData}
+                data={data}
                 margin={{
-                    left: 0,
+                    left:0,
                     right: 0,
                 }}
             >
-
                 <Line
-                    dataKey="desktop"
+                    dataKey="price"
                     type="monotone"
-                    stroke="var(--color-desktop)"
+                    stroke="var(--color-price)"
                     strokeWidth={2}
                     dot={false}
                 />

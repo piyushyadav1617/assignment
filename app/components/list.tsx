@@ -1,3 +1,5 @@
+"use client"
+import { useEffect, useState } from "react"
 import {
     Table,
     TableBody,
@@ -9,56 +11,93 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { SparkLine } from "./sparkLine"
-const invoices = [
-    {
-        invoice: "INV001",
-        paymentStatus: "Paid",
-        totalAmount: "$250.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV002",
-        paymentStatus: "Pending",
-        totalAmount: "$150.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV003",
-        paymentStatus: "Unpaid",
-        totalAmount: "$350.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV004",
-        paymentStatus: "Paid",
-        totalAmount: "$450.00",
-        paymentMethod: "Credit Card",
-    },
+import { Button } from "@/components/ui/button"
+import { DialogDemo } from "./modal"
+import json from "@/data.json"
+import { type Company } from "../types"
 
-]
 
-export function CompaniesList() {
+export function CompaniesList({ setStock }: { setStock: React.Dispatch<React.SetStateAction<string>> }) {
+    const [companies, setCompanies] = useState<Company[]>([])
+
+
+    async function getData() {
+        // const res = await fetch(`/api/all`);
+        // const data = await res.json();
+        const data = json;
+
+        const apple = data["AAPL"];
+        const amazon = data["AMZN"];
+        const microsoft = data["MSFT"];
+        const meta = data["META"];
+        setCompanies([
+            {
+                stock: "AAPL",
+                price: apple[apple.length - 1].price,
+                minPrice: Math.min(...apple.map(item => item.price)),
+                maxPrice: Math.max(...apple.map(item => item.price)),
+                stockData: apple
+            },
+            {
+                stock: "AMZN",
+                price: amazon[amazon.length - 1].price,
+                minPrice: Math.min(...amazon.map(item => item.price)),
+                maxPrice: Math.max(...amazon.map(item => item.price)),
+                stockData: amazon
+            },
+            {
+                stock: "MSFT",
+                price: microsoft[microsoft.length - 1].price,
+                minPrice: Math.min(...microsoft.map(item => item.price)),
+                maxPrice: Math.max(...microsoft.map(item => item.price)),
+                stockData: microsoft
+            },
+            {
+                stock: "META",
+                price: meta[meta.length - 1].price,
+                minPrice: Math.min(...meta.map(item => item.price)),
+                maxPrice: Math.max(...meta.map(item => item.price)),
+                stockData: meta
+            }
+        ])
+    }
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+
     return (
-        <div className="border p-2 my-10 rounded-lg">
-            <Table>
-                <TableHeader className="bg-muted">
+        <div className="border p-2 my-14 rounded-lg bg-muted dark:bg-muted/50">
+            <Table className="">
+                <TableHeader className="dark:bg-muted">
                     <TableRow>
-                        <TableHead>Name</TableHead>
+                        <TableHead>Stock</TableHead>
                         <TableHead>Price</TableHead>
+                        {/* <TableHead>Date Range</TableHead> */}
                         <TableHead className="text-nowrap">Min Price</TableHead>
-                        <TableHead className="text-nowrap">Mx Price</TableHead>
-                        <TableHead className="text-right text-nowrap">Last 30 days</TableHead>
+                        <TableHead className="text-nowrap">Max Price</TableHead>
+                        <TableHead className="text-nowrap">Last 30 days</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {invoices.map((invoice) => (
-                        <TableRow key={invoice.invoice}>
-                            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                            <TableCell>{invoice.paymentStatus}</TableCell>
-                            <TableCell>{invoice.paymentMethod}</TableCell>
-                            <TableCell>{invoice.totalAmount}</TableCell>
-                            <TableCell className="text-right w-40">
-                                <SparkLine />
+                    {companies.map((stock) => (
+                        <TableRow key={stock.stock}>
+                            <TableCell className="font-medium">
+                                <Button variant={"outline"} onClick={() => setStock(stock.stock)}>
+                                    {stock.stock}
+                                </Button>
+                            </TableCell>
+                            <TableCell>{stock.price.toLocaleString()}</TableCell>
+                            {/* <TableCell>{stock.dateRange}</TableCell> */}
+                            <TableCell>{stock.minPrice.toLocaleString()}</TableCell>
+                            <TableCell>{stock.maxPrice.toLocaleString()}</TableCell>
+                            <TableCell className="w-40">
+                                <DialogDemo stock={stock}>
+                                    <div className="flex flex-col items-start justify-center">
+                                        <SparkLine data={stock.stockData.slice(-30)}/>
+                                    </div>
+                                </DialogDemo>
                             </TableCell>
                         </TableRow>
                     ))}
