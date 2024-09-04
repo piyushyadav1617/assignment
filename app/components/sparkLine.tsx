@@ -23,14 +23,13 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function SparkLine({ data }: { data: any }) {
-    console.log(data)
     return (
-        <ChartContainer config={chartConfig} className=" h-14">
+        <ChartContainer config={chartConfig} className="h-16">
             <LineChart
                 accessibilityLayer
                 data={data}
                 margin={{
-                    left:0,
+                    left: 0,
                     right: 0,
                 }}
             >

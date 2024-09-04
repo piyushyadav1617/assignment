@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Bar } from "recharts";
 import { ChartCard } from "./components/chartCard";
 import { CompaniesList } from "./components/list";
+import { PieChartComponent } from "./components/pieChart";
+import { BarChartComponent } from "./components/barChart";
 export default function Home() {
   const [stock, setStock] = useState<string>("AAPL")
   return (

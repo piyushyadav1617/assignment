@@ -7,6 +7,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
+    DialogOverlay,
     DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -17,7 +18,8 @@ import { LineChartFull } from "./lineChart"
 export function DialogDemo({ children, stock }: { children: React.ReactNode, stock: Company }) {
     return (
         <Dialog>
-            <DialogTrigger asChild>
+            <DialogOverlay className="bg-transparent backdrop-blur-sm" />
+            <DialogTrigger asChild className="cursor-pointer">
                 {children}
             </DialogTrigger>
             <DialogContent className=" max-w-2xl p-10 -pl-10">

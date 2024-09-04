@@ -20,13 +20,12 @@ import {
 import { DatePicker } from "./datePicker"
 import { DateRange } from "react-day-picker"
 import { formatDate } from "../utils"
-import { LineChartFull } from "./lineChart"
-
+import { type Data } from "../types"
 
 export function ChartCard({ stock }: { stock: string }) {
 
     const [date, setDate] = useState<DateRange | undefined>(undefined)
-    // const [data, setData] = useState<any>([])
+    // const [data, setData] = useState<Data[]>([])
 
     const names: any = {
         AAPL: "Apple",
@@ -63,7 +62,7 @@ export function ChartCard({ stock }: { stock: string }) {
         }
         return true;
     })
-
+    
 
     return (
         <Card className="bg-muted dark:bg-muted/50">
