@@ -15,15 +15,8 @@ import { Button } from "@/components/ui/button"
 import { DialogDemo } from "./modal"
 import json from "@/data.json"
 import { type Company, Data } from "../types"
-import { formatDate, getDateRange } from "../utils"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { getDateRange } from "../utils"
+
 import { Ellipsis } from "lucide-react"
 
 export function CompaniesList({ setStock }: { setStock: React.Dispatch<React.SetStateAction<string>> }) {
