@@ -22,7 +22,7 @@ export function DialogDemo({ children, stock }: { children: React.ReactNode, sto
             <DialogTrigger asChild className="cursor-pointer">
                 {children}
             </DialogTrigger>
-            <DialogContent className=" max-w-2xl p-10 -pl-10">
+            <DialogContent className=" max-w-2xl p-10 -pl-10 bg-muted dark:bg-muted/50 backdrop-blur-md">
                 <LineChartFull stock={stock} />
             </DialogContent>
         </Dialog>

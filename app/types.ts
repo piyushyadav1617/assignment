@@ -1,5 +1,5 @@
 type Data = {
-    Date: number,
+    Date: number | Date,
     price: number,
 }
 

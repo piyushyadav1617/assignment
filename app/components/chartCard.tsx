@@ -1,7 +1,7 @@
 "use client"
 import json from "@/data.json"
 import { useState, useEffect } from "react"
-import { Line, LineChart, XAxis, YAxis } from "recharts"
+import { Line, LineChart, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
 import {
     Card,
     CardContent,
@@ -24,7 +24,11 @@ import { type Data } from "../types"
 
 export function ChartCard({ stock }: { stock: string }) {
 
-    const [date, setDate] = useState<DateRange | undefined>(undefined)
+    const defaulRange = {
+        from: new Date(2022, 0, 1),
+        to: new Date(2024, 7, 30),
+    }
+    const [date, setDate] = useState<DateRange | undefined>(defaulRange)
     // const [data, setData] = useState<Data[]>([])
 
     const names: any = {
@@ -56,13 +60,25 @@ export function ChartCard({ stock }: { stock: string }) {
     //@ts-ignore
     const data = json[stock];
 
-    const filteredData = data?.filter((item: any) => {
+    const filteredData = data?.filter((item: Data) => {
         if (date?.from && date?.to) {
             return item.Date >= date.from && item.Date <= date.to
         }
+        else if (date?.from) {
+            return item.Date >= date.from
+        }
         return true;
     })
-    
+
+    const ToolTipContentShow = ({ active, payload, label }: any) => {
+        return (
+            <div className="p-2 px-4 rounded-md bg-background/60 backdrop-blur-sm border flex flex-col w-32">
+                <span className="text-lg">{payload[0]?.value.toLocaleString()}</span>
+                <span className="">{formatDate(label)}</span>
+            </div>
+        )
+    }
+
 
     return (
         <Card className="bg-muted dark:bg-muted/50">
@@ -92,10 +108,12 @@ export function ChartCard({ stock }: { stock: string }) {
                             tickFormatter={formatDate}
                         />
                         <YAxis dataKey="price" tickMargin={8} />
-                        <ChartTooltip
+                        <Tooltip
+
                             // cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
+                            content={<ToolTipContentShow />}
                         />
+                        <CartesianGrid />
                         <Line
                             dataKey="price"
                             type="natural"
