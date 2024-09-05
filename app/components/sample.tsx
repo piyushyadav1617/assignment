@@ -22,18 +22,18 @@ const data = [
 ];
 
 // Custom Tooltip Component
-const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="bg-muted text-primary p-2  rounded">
-                <p className="font-bold">{`Page: ${label}`}</p>
-                <p>{`PV: ${payload[0].value}`}</p>
-                <p>{`UV: ${payload[1].value}`}</p>
-            </div>
-        );
-    }
-    return null;
-};
+// const CustomTooltip = ({ active, payload, label }) => {
+//     if (active && payload && payload.length) {
+//         return (
+//             <div className="bg-muted text-primary p-2  rounded">
+//                 <p className="font-bold">{`Page: ${label}`}</p>
+//                 <p>{`PV: ${payload[0].value}`}</p>
+//                 <p>{`UV: ${payload[1].value}`}</p>
+//             </div>
+//         );
+//     }
+//     return null;
+// };
 
 const RenderBarChart = () => {
     return (
@@ -43,7 +43,7 @@ const RenderBarChart = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 {/* Use the custom tooltip */}
-                <Tooltip content={<CustomTooltip />} />
+                {/* <Tooltip content={<CustomTooltip />} /> */}
                 <Legend />
                 <Bar dataKey="pv" fill="#8884d8" />
                 <Bar dataKey="uv" fill="#82ca9d" />
@@ -64,7 +64,7 @@ const RenderLineChart = () => {
                 <CartesianGrid stroke='#808080' strokeDasharray="5 5" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip content={<CustomTooltip />} />
+                {/* <Tooltip content={<CustomTooltip />} /> */}
                 <Legend />
                 <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
